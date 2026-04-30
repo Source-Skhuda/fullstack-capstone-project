@@ -2,7 +2,7 @@
 name: User story
 about: This template define a user story app "GiftLink"
 title: ''
-labels: good first issue
+labels: new
 assignees: julzdzitowiecka-coder
 
 ---
