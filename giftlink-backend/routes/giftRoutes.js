@@ -2,13 +2,17 @@ const express = require('express');
 const router = express.Router();
 const connectToDatabase = require('../models/db');
 
+const logger = require('../logger');
+
+// Get all gifts
 router.get('/', async (req, res, next) => {
+    logger.info(`GET /gifts called`);
     try {
         // Connect to MongoDB and store connection to db constant
         const db = await connectToDatabase();
         // use the collection() method to retrieve the gift collection
         const collection = db.collection("gifts");
-        // Fetch all gifts using the collection.find method. Chain with toArray method to convert to JSON array
+        // Fetch all gifts using the collection.find method, convert to JSON array
         const gifts = await collection.find({}).toArray();
         // return the gifts using the res.json method
         res.json(gifts);
@@ -18,6 +22,7 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+// Get a single gift by ID
 router.get('/:id', async (req, res, next) => {
     try {
         // Connect to MongoDB and store connection to db constant
@@ -26,7 +31,7 @@ router.get('/:id', async (req, res, next) => {
         const collection = db.collection("gifts");
         const id = req.params.id;
 
-        // Find a specific gift by ID using the collection.findOne method and store in constant called gift
+        // Find a specific gift by ID and store in constant called gift
         const gift = await collection.findOne({ id: id.toString() });
         if (!gift) {
             return res.status(404).send('Gift not found');
