@@ -1,4 +1,6 @@
+// loads environment variables from the .env file
 require('dotenv').config();
+
 const MongoClient = require('mongodb').MongoClient;
 const fs = require('fs');
 
