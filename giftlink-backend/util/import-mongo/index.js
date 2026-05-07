@@ -13,6 +13,7 @@ const data = JSON.parse(fs.readFileSync(filename, 'utf8')).docs;
 
 // connect to database and insert data into the collection
 async function loadData() {
+    //return the database instance
     const client = new MongoClient(url);
 
     try {
@@ -25,10 +26,9 @@ async function loadData() {
 
         // collection will be created if it does not exist
         const collection = db.collection(collectionName);
-        let cursor = await collection.find({});
-        let documents = await cursor.toArray();
+        const count = await collection.countDocuments();
 
-        if(documents.length == 0) {
+        if (count === 0) {
             // Insert data into the collection
             const insertResult = await collection.insertMany(data);
             console.log('Inserted documents:', insertResult.insertedCount);
@@ -45,6 +45,4 @@ async function loadData() {
 
 loadData();
 
-module.exports = {
-    loadData,
-  };
+module.exports = { loadData};
