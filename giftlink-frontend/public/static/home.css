@@ -37,7 +37,7 @@ body::before {
     position: relative;
     z-index: 1;
     color: #333;
-    letter-spacing: 7%;
+    letter-spacing: 5%;
 }
 
 h2, h1 {
