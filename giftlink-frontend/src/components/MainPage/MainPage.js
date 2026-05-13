@@ -47,7 +47,9 @@ function MainPage() {
                 {gifts.map((gift) => (
                     <div key={gift.id} className="col-md-4 mb-4">
                         <div className="card product-card">
-                            <img src={gift.image || '../../../public/logo512.png'} alt={gift.name} className="card-img-top" />
+                            <div className="image-placeholder">
+                                <img src={gift.image || '../../../public/logo512.png'} alt={gift.name} className="card-img-top" />
+                            </div>
                             <div className="card-body">
                                 <h2 className="card-title">
                                     {gift.name}
