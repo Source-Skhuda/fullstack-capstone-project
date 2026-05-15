@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
             query.category = { $regex: req.query.category, $options: "i" };
         }
         if (req.query.condition && req.query.condition.trim() !== "") {
-            query.condition = { $regex: req.query.condition, $options: "i" };
+            query.condition = { $eq: req.query.condition };
         }
         if (req.query.age_years && !isNaN(req.query.age_years)) {
             query.age_years = { $lte: Number(req.query.age_years) };

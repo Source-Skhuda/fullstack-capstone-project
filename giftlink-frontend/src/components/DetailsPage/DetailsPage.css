@@ -22,6 +22,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2;
 }
 
 /* Style for 'no image available' placeholder */
@@ -33,6 +34,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
 }
 
 /* Style for card header */
