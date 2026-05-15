@@ -10,6 +10,7 @@ function SearchPage() {
     const [searchResults, setSearchResults] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [ageRange, setAgeRange] = useState(6);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -52,6 +53,8 @@ function SearchPage() {
             setSearchResults(data);
         } catch (error) {
             console.error('Error fetching search results:', error);
+        } finally {
+            setLoading(false);
         }
     };
     const goToDetailsPage = (productId) => {
@@ -133,11 +136,19 @@ function SearchPage() {
                         </div>
                     ))
                 ) : (
-                    <div className="col-12">
-                        <div className="alert alert-info" role="alert">
-                            No products found. Please revise your filters.
+                    loading ? (
+                        <div className="col-12">
+                            <div className="alert" role="alert">
+                                Loading...
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className="col-12">
+                            <div className="alert alert-info" role="alert">
+                                No products found. Please revise your filters.
+                            </div>
+                        </div>
+                    )
                 )}
             </div>
         </div>
