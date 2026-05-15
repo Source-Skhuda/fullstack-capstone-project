@@ -48,7 +48,7 @@ function MainPage() {
                     <div key={gift.id} className="col-md-4 mb-4">
                         <div className="card product-card">
                             <div className="image-placeholder">
-                                <img src={gift.image || '../../../public/logo512.png'} alt={gift.name} className="card-img-top" />
+                                <img src={gift.image || '/logo192.png'} alt={gift.name} className="card-img-top" />
                             </div>
                             <div className="card-body">
                                 <h2 className="card-title">

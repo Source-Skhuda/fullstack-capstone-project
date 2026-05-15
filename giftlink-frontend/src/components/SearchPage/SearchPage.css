@@ -4,11 +4,12 @@
 }
 
 .search-button {
-    background-color: #007bff;
+    background-color: #009688;
+    border: none;
 }
 
 .search-button:hover {
-
+    background-color: #00796b; 
 }
 
 .dropdown-filter {

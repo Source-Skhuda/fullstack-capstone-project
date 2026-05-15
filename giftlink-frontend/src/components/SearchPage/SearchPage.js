@@ -113,7 +113,7 @@ function SearchPage() {
                         <div key={product.id} className="col-md-4 mb-4">
                             <div className="card product-card">
                                 <div className="image-placeholder">
-                                    <img src={product.image || '../../../public/logo512.png'} alt={product.name} className="card-img-top" />
+                                    <img src={product.image || '/logo192.png'} alt={product.name} className="card-img-top" />
                                 </div>
                                 <div className="card-body">
                                     <h2 className="card-title">
