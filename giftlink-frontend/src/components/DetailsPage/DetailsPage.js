@@ -74,9 +74,9 @@ function DetailsPage() {
     ];
 
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-    if (!gift) return <div>Gift not found</div>;
+    if (loading) return <div className="container mt-4">Loading...</div>;
+    if (error) return <div className="container mt-4">Error: {error}</div>;
+    if (!gift) return <div className="container mt-4">Gift not found</div>;
 
 return (
         <div className="container mt-4">
