@@ -45,7 +45,7 @@ function MainPage() {
             <div className="row">
                 {gifts.length === 0 && <p>No gifts found</p>}
                 {gifts.map((gift) => (
-                    <div key={gift.id} className="col-md-4 mb-4">
+                    <div key={gift.id} className="col-md-6 col-lg-4 mb-4">
                         <div className="card product-card">
                             <div className="image-placeholder">
                                 <img src={gift.image || '/logo192.png'} alt={gift.name} className="card-img-top" />

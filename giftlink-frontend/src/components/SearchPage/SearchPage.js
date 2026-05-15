@@ -110,7 +110,7 @@ function SearchPage() {
             <div className="row">
                 {searchResults.length > 0 ? (
                     searchResults.map((product) => (
-                        <div key={product.id} className="col-md-4 mb-4">
+                        <div key={product.id} className="col-md-6 col-lg-4 mb-4">
                             <div className="card product-card">
                                 <div className="image-placeholder">
                                     <img src={product.image || '/logo192.png'} alt={product.name} className="card-img-top" />
