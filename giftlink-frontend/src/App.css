@@ -17,7 +17,7 @@ html {
 body,
 .page-background {
   background-color: #f4f4f4; 
-  margin-right: calc(100vw - 100%);
+  /* margin-right: calc(100vw - 100%); */
 }
 
 /* Background color for cards */
@@ -125,6 +125,11 @@ body,
 .list-group-item-warning {
   color: #ffc107; 
 }
+body .navbar-toggler {
+  box-shadow: none !important;
+  margin-right: 1rem;
+  z-index: 100;
+}
 
 /* Customize the navbar brand and links */
 .navbar-brand, .nav-link {
@@ -151,6 +156,21 @@ body,
 @media (min-width: 992px) {
   .navbar-expand-lg .navbar-collapse {
     justify-content: right;
+  }
+}
+@media screen and (max-width: 991px) {
+  .mobile-navigation-drawer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 99;
+    background: #f8f9fa;
+    padding: 1rem;
+    box-shadow: 5px 1px #ccc;
+  }
+  .mobile-navigation-drawer.show {
+    display: flex; 
   }
 }
 
