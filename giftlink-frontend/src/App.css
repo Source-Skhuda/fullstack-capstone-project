@@ -190,7 +190,6 @@ body .navbar-toggler {
 .nav-item.active .nav-link, .nav-item .nav-link.active {
   color: #333; 
   background-color: transparent; 
-  text-decoration: underline; 
   font-weight: bold; 
 }
 

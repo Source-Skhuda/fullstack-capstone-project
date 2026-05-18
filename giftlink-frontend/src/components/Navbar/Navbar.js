@@ -1,10 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAppContext } from '../../context/AuthContext';
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const { isLoggedIn, setIsLoggedIn, userName, setUserName } = useAppContext();
+    const navigate = useNavigate();
     const toggleNavbar = () => {
         setIsOpen(!isOpen);
     };
+    useEffect(() => {
+        const authTokenFromSession = sessionStorage.getItem('auth-token');
+        const nameFromSession = sessionStorage.getItem('name');
+        if (authTokenFromSession) {
+            if(isLoggedIn && nameFromSession) {
+              setUserName(nameFromSession);
+            } else {
+              sessionStorage.removeItem('auth-token');
+              sessionStorage.removeItem('name');
+              sessionStorage.removeItem('email');
+              setIsLoggedIn(false);
+            }
+        }
+    },[isLoggedIn, setIsLoggedIn, setUserName]);
+
+    const handleLogout=()=>{
+        sessionStorage.removeItem('auth-token');
+        sessionStorage.removeItem('name');
+        sessionStorage.removeItem('email');
+        setIsLoggedIn(false);
+        navigate(`/app`);
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -20,12 +46,26 @@ export default function Navbar() {
                     <li className="nav-item">
                         <a className="nav-link" href="/app/search">Search</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link login-btn" href="/app/login">Login</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/app/register">Register</a>
-                    </li>
+                    {isLoggedIn ? (
+                        <>
+                            <li className="nav-item">
+                                <span className="nav-link active">Welcome, {userName}</span>
+                            </li>
+                            <li className="nav-item">
+                                <button className="nav-link login-btn" onClick={handleLogout}>Logout</button>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li className="nav-item">
+                                <a className="nav-link login-btn" href="/app/login">Login</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/app/register">Register</a>
+                            </li>
+                        </>
+                    )}
+                    
                 </ul>
             </div>
             <button className="navbar-toggler" type="button" data-bs-toggle="show" data-bs-target="#navbarMenu" onClick={toggleNavbar}>
