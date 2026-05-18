@@ -9,6 +9,7 @@ const pinoHttp = require('pino-http');
 const logger = require('./logger');
 const giftRoutes = require('./routes/giftRoutes');
 const searchRoutes = require('./routes/searchRoutes');
+const authRouter = require('./routes/authRoutes');
 
 const app = express();
 const port = 3060;
@@ -25,14 +26,7 @@ app.use(express.json());
 // Route files
 app.use('/api/gifts', giftRoutes);
 app.use('/api/search', searchRoutes);
-
-
-// Use Routes
-// Gift API Task 2: add the giftRoutes to the server by using the app.use() method.
-//{{insert code here}}
-
-// Search API Task 2: add the searchRoutes to the server by using the app.use() method.
-//{{insert code here}}
+app.use('/api/auth', authRouter);
 
 // Root
 app.get("/",(req,res)=>{
@@ -41,10 +35,10 @@ app.get("/",(req,res)=>{
 
 // Global Error Handler
 app.use((err, req, res, next) => {
-    console.error(err);
+    logger.error(err);
     res.status(500).send('Internal Server Error');
 });
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    logger.info(`Server running on port ${port}`);
 });
