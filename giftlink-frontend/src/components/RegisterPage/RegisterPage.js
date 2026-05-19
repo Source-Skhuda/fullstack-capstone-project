@@ -9,7 +9,7 @@ const Register = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { isLoggedIn, setIsLoggedIn } = useAppContext();
+    const { isLoggedIn, setIsLoggedIn, setUserName } = useAppContext();
     const navigate = useNavigate();
     const [error, setError] = useState(null);
 
@@ -46,6 +46,7 @@ const Register = () => {
                     sessionStorage.setItem("name", firstName);
                     sessionStorage.setItem("email", email);
                     setIsLoggedIn(true);
+                    setUserName(firstName);
                     navigate("/app");
                 }
                 if(json.error) {

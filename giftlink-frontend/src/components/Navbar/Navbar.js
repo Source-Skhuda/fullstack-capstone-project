@@ -13,23 +13,19 @@ export default function Navbar() {
         const authTokenFromSession = sessionStorage.getItem('auth-token');
         const nameFromSession = sessionStorage.getItem('name');
         if (authTokenFromSession) {
-            if(isLoggedIn && nameFromSession) {
-              setUserName(nameFromSession);
-            } else {
-              sessionStorage.removeItem('auth-token');
-              sessionStorage.removeItem('name');
-              sessionStorage.removeItem('email');
-              setIsLoggedIn(false);
-            }
+            setIsLoggedIn(true);
+            if (nameFromSession) setUserName(nameFromSession);
+        } else {
+            setIsLoggedIn(false);
         }
-    },[isLoggedIn, setIsLoggedIn, setUserName]);
+    },[]);
 
     const handleLogout=()=>{
         sessionStorage.removeItem('auth-token');
         sessionStorage.removeItem('name');
         sessionStorage.removeItem('email');
         setIsLoggedIn(false);
-        navigate(`/app`);
+        navigate("/app");
     }
 
     return (
@@ -68,7 +64,7 @@ export default function Navbar() {
                     
                 </ul>
             </div>
-            <button className="navbar-toggler" type="button" data-bs-toggle="show" data-bs-target="#navbarMenu" onClick={toggleNavbar}>
+            <button className="navbar-toggler" type="button" data-bs-target="#navbarMenu" onClick={toggleNavbar}>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
         </nav>

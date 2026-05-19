@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './LoginPage.css';
 import {urlConfig} from '../../config';
@@ -7,9 +7,15 @@ import { useAppContext } from '../../context/AuthContext';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { isLoggedIn, setIsLoggedIn } = useAppContext();
+    const { isLoggedIn, setIsLoggedIn, setUserName } = useAppContext();
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (sessionStorage.getItem('auth-token')) {
+            navigate("/app");
+        }
+    }, [navigate])
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -36,6 +42,7 @@ const Login = () => {
                 sessionStorage.setItem("email", json.email);
                 sessionStorage.setItem("name", json.name);
                 setIsLoggedIn(true);
+                setUserName(json.name);
                 navigate("/app");
             }
         } catch (error) {
