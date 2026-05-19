@@ -1,14 +1,50 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import './LoginPage.css';
+import {urlConfig} from '../../config';
+import { useAppContext } from '../../context/AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const handleLogin = async () => {
-        console.log("Inside handleLogin");
+    const { isLoggedIn, setIsLoggedIn } = useAppContext();
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError(null);
+        try {
+            const response = await fetch(`${urlConfig.backendUrl}/api/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                setError(errorData.message || "Failed to login");
+                return;
+            }
+            const json = await response.json();
+            if (json.authtoken) {
+                sessionStorage.setItem("auth-token", json.authtoken);
+                sessionStorage.setItem("email", json.email);
+                sessionStorage.setItem("name", json.name);
+                setIsLoggedIn(true);
+                navigate("/app");
+            }
+        } catch (error) {
+            setError("An error occurred while logging in. Please try again.");
+        }
     }
     return (
         <div className="container mt-5">
+            {error ? <div className="alert alert-danger">{error}</div> : ""}
             <div className="row justify-content-center">
                 <div className="col-md-6 col-lg-6">
                     <div className="login-card p-4 border rounded">

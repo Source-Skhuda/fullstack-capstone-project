@@ -14,17 +14,19 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const registerValidation = [
   body("email").isEmail().withMessage("Invalid email format").normalizeEmail(),
   body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
-  body("firstName").trim().notEmpty().withMessage("First name is required").isLength({ min: 2 }),
-  body("lastName").trim().notEmpty().withMessage("Last name is required").isLength({ min: 2 }),
+  body("firstName").trim().notEmpty().withMessage("First name is required").isLength({ min: 2 }).withMessage("First name must be at least 2 characters long"),
+  body("lastName").trim().notEmpty().withMessage("Last name is required").isLength({ min: 2 }).withMessage("Last name must be at least 2 characters long"),
 ];
 
-router.post('/register', registerValidation, async (req, res, next) => {
-    logger.info(`POST /register called with body: ${JSON.stringify(req.body)}`);
+router.post('/register', registerValidation, (req, res, next) => {
     // Validate request body
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
+    next();
+}, async (req, res, next) => {
+    logger.info(`POST /register called with body: ${JSON.stringify(req.body)}`);
     try {
         // Connect to the database
         const db = await connectToDatabase();
@@ -32,6 +34,7 @@ router.post('/register', registerValidation, async (req, res, next) => {
         // Check if user already exists
         const existingUser = await collection.findOne({ email: req.body.email });
         if (existingUser) {
+            logger.error('User already exists');
             return res.status(400).json({ message: "User already exists" });
         }
         // Hash the password
@@ -47,6 +50,7 @@ router.post('/register', registerValidation, async (req, res, next) => {
             createdAt: new Date()
         });
         if (!user.acknowledged) {
+            logger.error('Failed to register user');
             return res.status(500).json({ message: "Failed to register user" });
         }
         logger.info('User registered successfully');
@@ -57,9 +61,43 @@ router.post('/register', registerValidation, async (req, res, next) => {
             },
         };
         const authtoken = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
-        res.json({ authtoken, email });
+        return res.status(200).json({ authtoken, email: email });
     } catch (e) {
-        next(e);
+        logger.error('Error registering user:', e);
+        return res.status(500).send('Internal server error');
+    }
+});
+
+router.post('/login', async (req, res, next) => {
+    logger.info(`POST /login called with body: ${JSON.stringify(req.body)}`);
+    try {
+        // Connect to the database
+        const db = await connectToDatabase();
+        const collection = db.collection("users");
+        // Find the user by email
+        const user = await collection.findOne({ email: req.body.email });
+        if (!user) {
+            logger.error('User not found');
+            return res.status(400).json({ message: "Invalid credentials" });
+        }
+        // Check password
+        const isMatch = await bcryptjs.compare(req.body.password, user.password);
+        if (!isMatch) {
+            logger.error('Passwords do not match');
+            return res.status(400).json({ message: "Invalid credentials" });
+        }
+        logger.info('User logged in successfully');
+        // Generate JWT token
+        const payload = {
+            user: {
+                id: user._id.toString(),
+            },
+        };
+        const authtoken = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+        return res.status(200).json({ authtoken, email: user.email, name: user.firstName });
+    } catch (e) {
+        logger.error('Error logging in:', e);
+        return res.status(500).send('Internal server error');
     }
 });
 

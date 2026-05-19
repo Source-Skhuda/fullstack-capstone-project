@@ -31,7 +31,11 @@ const Register = () => {
             });
             if (!response.ok) {
                 const errorData = await response.json();
-                setError(errorData.message || "Failed to register");
+                if (Array.isArray(errorData.errors)) {
+                    setError(errorData.errors.map(err => err.msg).join(", "));
+                } else {
+                    setError(errorData.message || "Failed to register");
+                }
                 return;
             } else {
                 // Handle successful registration
