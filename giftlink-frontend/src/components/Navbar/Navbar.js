@@ -28,7 +28,7 @@ export default function Navbar() {
         navigate("/app");
     }
     const handleUpdate = () => {
-        
+        navigate("/app/profile");
     }
 
     return (
