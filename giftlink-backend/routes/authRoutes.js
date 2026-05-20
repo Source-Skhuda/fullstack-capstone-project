@@ -49,7 +49,7 @@ router.post('/register', registerValidation, (req, res, next) => {
             lastName: req.body.lastName,
             createdAt: new Date()
         });
-        if (!user.acknowledged) {
+        if (!user) {
             logger.error('Failed to register user');
             return res.status(500).json({ message: "Failed to register user" });
         }
@@ -97,6 +97,55 @@ router.post('/login', async (req, res, next) => {
         return res.status(200).json({ authtoken, email: user.email, name: user.firstName });
     } catch (e) {
         logger.error('Error logging in:', e);
+        return res.status(500).send('Internal server error');
+    }
+});
+
+router.put('/update', async (req, res, next) => {
+    logger.info(`PUT /update called with body: ${JSON.stringify(req.body)}`);
+    // Validate request body
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        logger.error('Validation errors in update request', errors.array());
+        return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+        // Connect to the database
+        const db = await connectToDatabase();
+        const collection = db.collection("users");
+        // Find the user by email
+        const email = req.body.email;
+        if(!email) {
+            logger.error('Email not provided');
+            return res.status(400).json({ message: "Email not provided" });
+        }
+        const user = await collection.findOne({ email });
+        if (!user) {
+            logger.error('User not found');
+            return res.status(404).json({ message: "User not found" });
+        }
+        user.firstName = req.body.firstName || user.firstName;
+        user.updatedAt = new Date();
+        // Update user information
+        const updatedUser = await collection.findOneAndUpdate(
+            { email: req.body.email },
+            { $set:  user  },
+            { returnDocument: "after" }
+        );
+        if (!updatedUser) {
+            logger.error('Failed to update user');
+            return res.status(500).json({ message: "Failed to update user" });
+        }
+        logger.info('User updated successfully');
+        const payload = {
+            user: {
+                id: updatedUser._id.toString(),
+            },
+        };
+        const authtoken = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+        return res.status(200).json({ message: "User updated successfully", authtoken });
+    } catch (e) {
+        logger.error('Error updating user:', e);
         return res.status(500).send('Internal server error');
     }
 });

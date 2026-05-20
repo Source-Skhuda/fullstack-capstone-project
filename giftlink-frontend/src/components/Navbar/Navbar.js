@@ -27,6 +27,9 @@ export default function Navbar() {
         setIsLoggedIn(false);
         navigate("/app");
     }
+    const handleUpdate = () => {
+        
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -45,7 +48,7 @@ export default function Navbar() {
                     {isLoggedIn ? (
                         <>
                             <li className="nav-item">
-                                <span className="nav-link active">Welcome, {userName}</span>
+                                <button className="nav-link active" onClick={handleUpdate}>Welcome, {userName}</button>
                             </li>
                             <li className="nav-item">
                                 <button className="nav-link login-btn" onClick={handleLogout}>Logout</button>
