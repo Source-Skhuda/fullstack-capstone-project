@@ -20,14 +20,14 @@ jobs:
           node-version: 18
 
       - name: Install backend deps
-        working-directory: giftlink-backend
         run: |
+          cd giftlink-backend
           npm ci
           npm install -g jshint
 
       - name: Run JSHint
-        working-directory: giftlink-backend
         run: |
+          cd giftlink-backend
           jshint .
           echo "Linted all the js files successfully"
 
@@ -47,12 +47,14 @@ jobs:
           node-version: 18
 
       - name: Install backend deps
-        working-directory: giftlink-backend
-        run: npm ci
+        run: |
+          cd giftlink-backend
+          npm ci
 
       - name: Run Mocha tests
-        working-directory: giftlink-backend
-        run: npm test
+        run: |
+          cd giftlink-backend
+          npm test
 
   build_frontend:
     name: Build Frontend
@@ -66,12 +68,9 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install frontend deps
-        working-directory: giftlink-frontend
-        run: npm ci
-
-      - name: Build frontend
-        working-directory: giftlink-frontend
+      - name: Install & Build
         run: |
+          cd giftlink-frontend
+          npm install
           npm run build
           echo "Client-side build successfully"
