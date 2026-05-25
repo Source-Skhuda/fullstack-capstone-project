@@ -21,6 +21,7 @@ async function connectToDatabase() {
         // Connect to MongoDB
         await client.connect();
         console.log("Connected to MongoDB");
+        global._mongoClient = client;
     }
     // Connect to database giftDB and store in variable dbInstance
     dbInstance = client.db(dbName);

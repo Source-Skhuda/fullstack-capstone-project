@@ -12,8 +12,8 @@ after(async () => {
   if (mongoServer) {
     await mongoServer.stop();
   }
-  if (app.close) {
-    app.close();
+  if (global._mongoClient) {
+    await global._mongoClient.close();
   }
   process.exit(0);
 });
