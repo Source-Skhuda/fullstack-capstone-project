@@ -4,8 +4,8 @@ const express = require('express');
 const cors = require('cors');
 
 const connectToDatabase = require('./models/db');
-const {loadData} = require("./util/import-mongo/index");
 if (process.env.NODE_ENV !== "test") {
+    const { loadData } = require("./util/import-mongo/index");
     loadData();
 }
 const pinoHttp = require('pino-http');
