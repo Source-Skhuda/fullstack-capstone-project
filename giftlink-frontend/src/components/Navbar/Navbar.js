@@ -9,6 +9,7 @@ export default function Navbar() {
     const toggleNavbar = () => {
         setIsOpen(!isOpen);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const authTokenFromSession = sessionStorage.getItem('auth-token');
         const nameFromSession = sessionStorage.getItem('name');

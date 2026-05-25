@@ -9,7 +9,7 @@ const Register = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { isLoggedIn, setIsLoggedIn, setUserName } = useAppContext();
+    const { setIsLoggedIn, setUserName } = useAppContext();
     const navigate = useNavigate();
     const [error, setError] = useState(null);
 

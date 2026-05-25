@@ -7,7 +7,7 @@ import { useAppContext } from '../../context/AuthContext';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { isLoggedIn, setIsLoggedIn, setUserName } = useAppContext();
+    const { setIsLoggedIn, setUserName } = useAppContext();
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
