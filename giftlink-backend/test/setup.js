@@ -7,3 +7,13 @@ before(async () => {
   process.env.MONGO_URL = mongoServer.getUri();
   console.log("TEST MONGO_URL =", process.env.MONGO_URL);
 });
+
+after(async () => {
+  if (mongoServer) {
+    await mongoServer.stop();
+  }
+  if (app.close) {
+    app.close();
+  }
+  process.exit(0);
+});
