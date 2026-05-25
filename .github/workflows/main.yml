@@ -69,8 +69,8 @@ jobs:
           node-version: 18
 
       - name: Install & Build
+        working-directory: giftlink-frontend
         run: |
-          cd giftlink-frontend
           npm ci
           npm run build
           echo "Client-side build successfully"
