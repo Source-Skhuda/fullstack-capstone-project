@@ -13,16 +13,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
       - name: Install backend deps
         run: |
           cd giftlink-backend
-          npm ci
+          npm install
           npm install -g jshint
 
       - name: Run JSHint
@@ -40,16 +42,18 @@ jobs:
       NODE_ENV: test
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
       - name: Install backend deps
         run: |
           cd giftlink-backend
-          npm ci
+          npm install
 
       - name: Run Mocha tests
         run: |
@@ -62,13 +66,15 @@ jobs:
     needs: test_backend
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install & Build
+      - name: Install & Build Frontend
         run: |
           cd giftlink-frontend
           npm install
