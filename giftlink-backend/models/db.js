@@ -4,12 +4,16 @@ require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
 
 // MongoDB connection URL with authentication options and init connect insrance
-let url = `${process.env.MONGO_URL}`;
 let dbInstance = null;
 let client = null;
 const dbName = "giftdb";
 
 async function connectToDatabase() {
+    let url = `${process.env.MONGO_URL}`;
+     if (!url) {
+        console.log("connectToDatabase() called with EMPTY MONGO_URL");
+        throw new Error("MONGO_URL is not set");
+    }
     if (dbInstance) return dbInstance;
 
     if (!client) {

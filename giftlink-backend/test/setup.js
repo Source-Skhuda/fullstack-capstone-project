@@ -5,10 +5,5 @@ let mongoServer;
 before(async () => {
   mongoServer = await MongoMemoryServer.create();
   process.env.MONGO_URL = mongoServer.getUri();
-});
-
-after(async () => {
-  if (mongoServer) {
-    await mongoServer.stop();
-  }
+  console.log("TEST MONGO_URL =", process.env.MONGO_URL);
 });
