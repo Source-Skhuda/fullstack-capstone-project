@@ -30,8 +30,8 @@ app.use('/api/auth', authRouter);
 
 // Root
 app.get("/",(req,res)=>{
-    res.send("Inside the server")
-})
+    res.send("Inside the server");
+});
 
 // Global Error Handler
 app.use((err, req, res, next) => {
