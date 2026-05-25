@@ -1,5 +1,4 @@
 const { MongoMemoryServer } = require("mongodb-memory-server");
-const mongoose = require("mongoose");
 
 let mongoServer;
 
@@ -9,6 +8,7 @@ before(async () => {
 });
 
 after(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
+  if (mongoServer) {
+    await mongoServer.stop();
+  }
 });
