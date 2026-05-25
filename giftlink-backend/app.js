@@ -18,9 +18,11 @@ const app = express();
 const port = 3060;
 
 // Connect to DB once
-connectToDatabase()
-    .then(() => logger.info('Connected to DB'))
-    .catch((e) => logger.error('Failed to connect to DB', e));
+if (process.env.NODE_ENV !== "test") {
+    connectToDatabase()
+        .then(() => logger.info('Connected to DB'))
+        .catch((e) => logger.error('Failed to connect to DB', e));
+}
 
 app.use(pinoHttp({ logger }));
 app.use(cors());
