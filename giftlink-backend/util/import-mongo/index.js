@@ -3,7 +3,6 @@ require('dotenv').config();
 
 const MongoClient = require('mongodb').MongoClient;
 const fs = require('fs');
-console.log("IMPORT-MONGO LOADED, NODE_ENV =", process.env.NODE_ENV);
 // MongoDB connection URL with authentication options
 let url = `${process.env.MONGO_URL}`;
 let filename = `${__dirname}/gifts.json`;
