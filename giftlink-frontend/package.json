@@ -16,10 +16,13 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "shx": "^0.3.4"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "xcopy build ..\\giftwebsite\\build /E /I /Y",
+    "postbuild": "shx rm -rf ../giftwebsite/build && shx cp -r build ../giftwebsite/build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
