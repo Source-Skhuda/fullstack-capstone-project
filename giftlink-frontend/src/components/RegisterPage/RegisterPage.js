@@ -17,7 +17,7 @@ const Register = () => {
         e.preventDefault();
         setError(null);
         try {
-            const response = await fetch(`${urlConfig.backendUrl}/api/auth/register`, {
+            const response = await fetch(`${urlConfig.backendUrl}/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -19,6 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "xcopy build ..\\giftwebsite\\build /E /I /Y",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

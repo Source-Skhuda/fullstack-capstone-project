@@ -11,7 +11,7 @@ function MainPage() {
          // fetch all gifts
         const fetchGifts = async () => {
             try {
-                let url = `${urlConfig.backendUrl}/api/gifts`;
+                let url = `${urlConfig.backendUrl}/gifts`;
                 const response = await fetch(url);
                 if (!response.ok) {
                     //something went wrong

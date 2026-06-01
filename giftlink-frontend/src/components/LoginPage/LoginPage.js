@@ -21,7 +21,7 @@ const Login = () => {
         e.preventDefault();
         setError(null);
         try {
-            const response = await fetch(`${urlConfig.backendUrl}/api/auth/login`, {
+            const response = await fetch(`${urlConfig.backendUrl}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -17,7 +17,7 @@ function SearchPage() {
         // fetch all products
         const fetchProducts = async () => {
             try {
-                let url = `${urlConfig.backendUrl}/api/gifts`
+                let url = `${urlConfig.backendUrl}/gifts`
                 console.log(url)
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -37,7 +37,7 @@ function SearchPage() {
 
     const handleSearch = async () => {
         // Construct the search URL based on user input
-        const baseUrl = `${urlConfig.backendUrl}/api/search?`;
+        const baseUrl = `${urlConfig.backendUrl}/search?`;
         const queryParams = new URLSearchParams({
             name: searchQuery,
             age_years: ageRange,

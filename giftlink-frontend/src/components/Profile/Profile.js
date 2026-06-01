@@ -59,7 +59,7 @@ const Profile = () => {
         navigate("/app/login");
         return;
       }
-      const response = await fetch(`${urlConfig.backendUrl}/api/auth/update`, {
+      const response = await fetch(`${urlConfig.backendUrl}/auth/update`, {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json',
