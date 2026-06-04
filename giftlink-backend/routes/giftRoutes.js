@@ -23,17 +23,28 @@ router.get('/:id', async (req, res, next) => {
         const db = await connectToDatabase();
         const collection = db.collection("gifts");
 
-        const id = Number(req.params.id);
+        const id = req.params.id;
 
-        const gift = await collection.findOne({ id });
-
-        if (!gift) {
-            return res.status(404).json({ message: "Gift not found" });
+        if (!id) {
+            return res.status(400).json({
+                message: "Gift ID is required"
+            });
         }
 
-        res.json(gift);
+        const gift = await collection.findOne({
+            id: id.toString()
+        });
+
+        if (!gift) {
+            return res.status(404).json({
+                message: "Gift not found"
+            });
+        }
+
+        return res.status(200).json(gift);
 
     } catch (e) {
+        console.error("Error fetching gift:", e);
         next(e);
     }
 });
