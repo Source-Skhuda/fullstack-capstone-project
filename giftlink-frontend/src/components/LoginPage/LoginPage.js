@@ -23,16 +23,16 @@ const Login = () => {
 
         try {
             const response = await fetch(`${urlConfig.backendUrl}/auth/login`, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${sessionStorage.getItem("auth-token") || ""}`
-                },
-                body: JSON.stringify({
-                    email,
-                    password
-                })
-            });
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer token'
+    },
+    body: JSON.stringify({
+        email,
+        password
+    })
+});
 
             const json = await response.json();
 
