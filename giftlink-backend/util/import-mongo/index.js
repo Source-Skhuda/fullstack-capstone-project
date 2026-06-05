@@ -45,3 +45,13 @@ async function loadData() {
 }
 
 module.exports = { loadData };
+
+loadData()
+  .then(() => {
+    console.log("Import completed");
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error("Import failed:", err);
+    process.exit(1);
+  });
